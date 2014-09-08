@@ -1,6 +1,6 @@
 #Classified Magic
 
-  OOP for NodeJS with magic. Inspired by (Classified)[https://github.com/cblanquera/classified]
+  OOP for NodeJS with magic. Inspired by [Classified](https://github.com/cblanquera/classified)
 
 ### Installation
 
