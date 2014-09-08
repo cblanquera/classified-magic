@@ -1,6 +1,6 @@
 #Classified Magic
 
-  OOP for NodeJS with magic
+  OOP for NodeJS with magic. Inspired by (Classified)[https://github.com/cblanquera/classified]
 
 ### Installation
 
@@ -16,8 +16,11 @@ var classified = require('classified-magic');
 //root definition
 var RootClass = classified(function() {
 	var prototype = {
-		data: {},
+		//sample constants
 		SOME_CONSTANT: 'foo',
+		
+		//sample public properties
+		data: {},
 		sampleProperty: 4.5,
 		sampleDeepProperty: {
 			sample1: 'Hello',
@@ -30,14 +33,14 @@ var RootClass = classified(function() {
 			}
 		},
 		
-		//protected
+		//sample protected properties
 		_sampleProperty: 5.5,
 		_sampleDeepProperty: {
 			sample1: '_Hello',
 			sample2: [8, 9, 0, 1]
 		},
 		
-		//private
+		//sample private properties
 		__sampleProperty: 6.5,
 		__sampleDeepProperty: {
 			sample1: '__Hello',
@@ -45,18 +48,22 @@ var RootClass = classified(function() {
 		}
 	};
 	
+	//sample constructor
 	prototype.___construct = function() {
 		this.constructCalled = true;
 	};
 	
+	//sample public method
 	prototype.sampleMethod = function() {
 		return this.SOME_CONSTANT;
 	};
 	
+	//sample protected method
 	prototype._sampleMethod = function() {
 		return '_bar';
 	};
 	
+	//sample private method
 	prototype.__sampleMethod = function() {
 		return '__zoo';
 	};
@@ -67,8 +74,8 @@ var RootClass = classified(function() {
 		+ this.__sampleMethod();
 	};
 	
+	//sample magic methods
 	prototype.___get = function(name) {
-		//console.log('in?', name);
 		return this.data[name];
 	};
 	
@@ -91,23 +98,23 @@ var RootClass = classified(function() {
 	return prototype;
 });
 
-//child definition
+//sample child definition
 //you can use object or function as the definition
 var ChildClass = classified(function() {
 	var prototype = {};
 	
-	//constants
+	//sample constants
 	prototype.SOME_CONSTANT_2 = 'bar';
 	
-	//protected properties
+	//sample protected properties
 	prototype._sampleProperty = 7.5;
 	
-	//public methods
+	//sample public methods
 	prototype.sampleMethod = function() {
 		return this._sampleMethod();
 	};
 	
-	//protected methods
+	//sample protected methods
 	prototype._sampleMethod = function() {
 		return this.___parent._sampleMethod();
 	};
@@ -127,6 +134,7 @@ try {
 	console.log('Protected call did not work');
 }
 
+//test magic
 child.foo = 4;
 
 console.log(child.data.foo);
