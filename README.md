@@ -1,6 +1,6 @@
 #Classified Magic
 
-  Classified with Magic.
+  OOP for NodeJS with magic
 
 ### Installation
 
