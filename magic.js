@@ -1,5 +1,6 @@
 (function() {
-	var classified = require('classified');
+	var classified 	= require('classified');
+	var separator	= require('path').sep;
 	
 	if(typeof Proxy === 'undefined') {
 		var Proxy = require('node-proxy');
@@ -56,7 +57,8 @@
 				//if we have a path
 				if(path) {
 					//require it
-					prototype = require((path+'/'+prototype).replace('//', '/'));
+					prototype = require((path + separator + prototype)
+					.replace(separator + separator, separator));
 				}
 			}
 			

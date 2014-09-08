@@ -1,7 +1,7 @@
 {
   "name": "classified-magic",
   "description": "OOP for NodeJS with magic",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": {
     "name": "Christian Blanquera",
     "email": "cblanquera@openovate.com"
