@@ -1,6 +1,7 @@
-var classified 	= require('classified');
-var separator	= require('path').sep;
-
+var classified 	= require('classified'),
+	separator	= require('path').sep,
+	registry 	= {};
+	
 if(typeof Proxy === 'undefined') {
 	var Proxy = require('node-proxy');
 }
@@ -57,7 +58,12 @@ var magic = function() {
 	 */
 	method.extend = function(prototype) {
 		//if prototype is a string
-		if(typeof prototype === 'string') {
+		//and it's definied in the registry
+		if(typeof prototype === 'string'
+		&& typeof registry[prototype] !== 'undefined') {
+			prototype = registry[prototype];
+		//if prototype is a string
+		} else if(typeof prototype === 'string') {
 			//its a path to a file
 			var path = _getCallerPath();
 			
@@ -70,6 +76,10 @@ var magic = function() {
 				if(typeof prototype.definition === 'function') {
 					prototype = prototype.definition();
 				}
+			//its a string and we do not know
+			//what to do with it
+			} else {
+				return this;
 			}
 		}
 		
@@ -99,6 +109,17 @@ var magic = function() {
 		}
 		
 		return instance;
+	};
+	
+	/**
+	 * Registers this class for extend
+	 *
+	 * @param string
+	 * @return this
+	 */
+	method.register = function(name) {
+		registry[name] = this.definition();
+		return this;
 	};
 	
 	/**

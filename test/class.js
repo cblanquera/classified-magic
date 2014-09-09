@@ -239,5 +239,17 @@ describe('Magic Test Suite', function() {
 			
 			assert.equal('undefined', child.sampleMethod());
 		});
+		
+		it('should not be able to register and access root', function() {
+			Root.register('rooty');
+			
+			var child = classified({
+				sampleMethod: function() {
+					return typeof this.___parent.__sampleMethod;
+				}
+			}).extend('rooty').load();
+			
+			assert.equal('undefined', child.sampleMethod());
+		});
 	});
 });
