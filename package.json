@@ -18,7 +18,7 @@
 	"magic"
   ],
   "dependencies": {
-    "classified": "0.0.8" ,
+    "classified": "0.0.9" ,
 	"node-proxy": "0.8.0"
   },
   "main": "./magic.js",
