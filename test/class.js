@@ -141,20 +141,20 @@ describe('Magic Test Suite', function() {
 		var root = Root.load();
 		
 		it('should set new properties in data', function() {
-			var child = classified({ SOME_CONSTANT_2: 44.5 }).extend(Root.definition()).load();
+			var child = classified({ SOME_CONSTANT_2: 44.5 }).trait(Root.definition()).load();
 			child.foo = 2;
 			assert.equal(2, child.data.foo);
 		});
 		
 		it('should retrieve properties in data', function() {
-			var child = classified({ SOME_CONSTANT_2: 44.5 }).extend(Root.definition()).load();
+			var child = classified({ SOME_CONSTANT_2: 44.5 }).trait(Root.definition()).load();
 			child.foo = 2;
 			assert.equal(2, child.foo);
 			assert.equal(2, child['foo']);
 		});
 		
 		it('should loop through data', function() {
-			var child = classified({ SOME_CONSTANT_2: 44.5 }).extend(Root.definition()).load();
+			var child = classified({ SOME_CONSTANT_2: 44.5 }).trait(Root.definition()).load();
 			child.foo = 2;
 			
 			for(var key in child) {
@@ -165,17 +165,17 @@ describe('Magic Test Suite', function() {
 		});
 		
 		it('should copy constants', function() {
-			var child = classified({ SOME_CONSTANT_2: 44.5 }).extend(Root.definition()).load();
+			var child = classified({ SOME_CONSTANT_2: 44.5 }).trait(Root.definition()).load();
 			assert.equal('foo', child.SOME_CONSTANT);
 		});
 		
 		it('should call construct', function() {
-			var child = classified({}).extend(Root.definition()).load();
+			var child = Root.extend({}).load();
 			assert.equal(true, child.constructCalled);
 		});
 		
 		it('should be the same as root', function() {
-			var child = classified({}).extend(Root.definition()).load();
+			var child = Root.extend({}).load();
 			assert.equal(child.sampleProperty, root.sampleProperty);
 			assert.equal(child.sampleDeepProperty.sample1, root.sampleDeepProperty.sample1);
 			assert.equal(child.sampleDeepProperty.sample2[1], root.sampleDeepProperty.sample2[1]);
@@ -186,7 +186,7 @@ describe('Magic Test Suite', function() {
 		});
 		
 		it('should not change properties of root', function() {
-			var child = classified({}).extend(Root.definition()).load();
+			var child = classified({}).trait(Root.definition()).load();
 			
 			child.sampleProperty = 5.5;
 			child.sampleDeepProperty.sample1 = 'hi';
@@ -200,7 +200,7 @@ describe('Magic Test Suite', function() {
 		it('should be able to add properties', function() {
 			var child = classified({
 				childSample: 4
-			}).extend(Root.definition()).load();
+			}).trait(Root.definition()).load();
 			
 			child.sampleProperty = 5.5;
 			child.sampleDeepProperty.sample1 = 'hi';
@@ -215,17 +215,17 @@ describe('Magic Test Suite', function() {
 				sampleMethod: function() {
 					return this.___parent.sampleMethod()
 				}
-			}).extend(Root.definition()).load();
+			}).trait(Root.definition()).load();
 			
 			assert.equal('foo', child.sampleMethod());
 		});
 		
 		it('should be able access parent protected methods', function() {
-			var child = classified({
+			var child = Root.extend({
 				sampleMethod: function() {
 					return this.___parent._sampleMethod();
 				}
-			}).extend(Root.definition()).load();
+			}).load();
 			
 			assert.equal('_bar', child.sampleMethod());
 		});
@@ -235,7 +235,7 @@ describe('Magic Test Suite', function() {
 				sampleMethod: function() {
 					return typeof this.___parent.__sampleMethod;
 				}
-			}).extend(Root.definition()).load();
+			}).trait(Root.definition()).load();
 			
 			assert.equal('undefined', child.sampleMethod());
 		});
@@ -247,7 +247,7 @@ describe('Magic Test Suite', function() {
 				sampleMethod: function() {
 					return typeof this.___parent.__sampleMethod;
 				}
-			}).extend('rooty').load();
+			}).trait('rooty').load();
 			
 			assert.equal('undefined', child.sampleMethod());
 		});

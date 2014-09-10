@@ -1,6 +1,5 @@
 var classified 	= require('classified'),
-	separator	= require('path').sep,
-	registry 	= {};
+	separator	= require('path').sep;
 	
 if(typeof Proxy === 'undefined') {
 	var Proxy = require('node-proxy');
@@ -56,14 +55,9 @@ var magic = function() {
 	 * @param function|object - if function, will use prototype
 	 * @return this
 	 */
-	method.extend = function(prototype) {
+	method.trait = function(prototype) {
 		//if prototype is a string
-		//and it's definied in the registry
-		if(typeof prototype === 'string'
-		&& typeof registry[prototype] !== 'undefined') {
-			prototype = registry[prototype];
-		//if prototype is a string
-		} else if(typeof prototype === 'string') {
+		if(typeof prototype === 'string') {
 			//its a path to a file
 			var path = _getCallerPath();
 			
@@ -76,15 +70,21 @@ var magic = function() {
 				if(typeof prototype.definition === 'function') {
 					prototype = prototype.definition();
 				}
-			//its a string and we do not know
-			//what to do with it
-			} else {
-				return this;
 			}
 		}
 		
-		definition.extend(prototype);
+		definition.trait(prototype);
 		return this;
+	};
+	
+	/**
+	 * Creates a child definition
+	 *
+	 * @param function|object - if function, must return object
+	 * @return function
+	 */
+	method.extend = function(prototype) {
+		return magic().define(prototype).trait(this.definition());
 	};
 	
 	/**
@@ -118,7 +118,7 @@ var magic = function() {
 	 * @return this
 	 */
 	method.register = function(name) {
-		registry[name] = this.definition();
+		definition.register(name);
 		return this;
 	};
 	

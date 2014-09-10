@@ -55,17 +55,17 @@ var RootClass = classified(function() {
 	
 	//sample public method
 	prototype.sampleMethod = function() {
-		return this.SOME_CONSTANT;
+		return this._sampleMethod();
 	};
 	
 	//sample protected method
 	prototype._sampleMethod = function() {
-		return '_bar';
+		return this.__sampleMethod();
 	};
 	
 	//sample private method
 	prototype.__sampleMethod = function() {
-		return '__zoo';
+		return this.SOME_CONSTANT + this._sampleProperty;
 	};
 	
 	prototype.sampleAccessMethod = function() {
@@ -100,7 +100,7 @@ var RootClass = classified(function() {
 
 //sample child definition
 //you can use object or function as the definition
-var ChildClass = classified(function() {
+var ChildClass = RootClass.extend(function() {
 	var prototype = {};
 	
 	//sample constants
@@ -120,7 +120,7 @@ var ChildClass = classified(function() {
 	};
 	
 	return prototype;
-}).extend(RootClass.definition());
+});
 
 //instantiate child
 var child = ChildClass.load();
@@ -156,6 +156,8 @@ console.log(child.data.foo);
   * parents() - Returns direct parents of this definition
   * get() - Returns the publically accessable class definition function
   * load() - Returns class defined instantiation
+  * register(string) - saves a state of the definition which can be recalled in trait
+  * trait(string|function|object) - will setup the provided as a parent, if string will recall from registry
 
 ### What's up with the underscores?
 
