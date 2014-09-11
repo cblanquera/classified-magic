@@ -165,7 +165,8 @@ var magic = function() {
 	};
 	
 	var _isMagicBinded = function() {
-		return arguments.callee.caller.caller.toString().indexOf('__classifiedBinded__') !== -1
+		return arguments.callee.caller.arguments[1] === '__classifiedBinded__'
+		|| arguments.callee.caller.caller.toString().indexOf('__classifiedBinded__') !== -1;
 	};
 	
 	var _makeItMagic = function(instance) {
