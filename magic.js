@@ -84,7 +84,8 @@ var magic = function() {
 	 * @return function
 	 */
 	method.extend = function(prototype) {
-		return magic().define(prototype).trait(this.definition());
+		this.__isClassified__ = true;
+		return magic().define(prototype).trait(this);
 	};
 	
 	/**

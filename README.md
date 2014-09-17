@@ -15,111 +15,107 @@ var classified = require('classified-magic');
 
 //root definition
 var RootClass = classified(function() {
-	var prototype = {
-		//sample constants
-		SOME_CONSTANT: 'foo',
-		
-		//sample public properties
-		data: {},
-		sampleProperty: 4.5,
-		sampleDeepProperty: {
-			sample1: 'Hello',
-			sample2: [4, 5, 6, 7],
-			sample3: {
-				bool	: true,
-				regex	: /^abc/,
-				date	: new Date(),
-				string	: String
-			}
-		},
-		
-		//sample protected properties
-		_sampleProperty: 5.5,
-		_sampleDeepProperty: {
-			sample1: '_Hello',
-			sample2: [8, 9, 0, 1]
-		},
-		
-		//sample private properties
-		__sampleProperty: 6.5,
-		__sampleDeepProperty: {
-			sample1: '__Hello',
-			sample2: [12, 13, 14, 15]
+	//sample constants
+	this.SOME_CONSTANT = 'foo';
+	
+	//sample public properties
+	this.data = {};
+	
+	this.sampleProperty = 4.5;
+	
+	this.sampleDeepProperty = {
+		sample1: 'Hello',
+		sample2: [4, 5, 6, 7],
+		sample3: {
+			bool	: true,
+			regex	: /^abc/,
+			date	: new Date(),
+			string	: String
 		}
 	};
 	
+	//sample protected properties
+	this._sampleProperty = 5.5;
+	
+	this._sampleDeepProperty = {
+		sample1: '_Hello',
+		sample2: [8, 9, 0, 1]
+	};
+	
+	//sample private properties
+	this.__sampleProperty = 6.5;
+	
+	this.__sampleDeepProperty = {
+		sample1: '__Hello',
+		sample2: [12, 13, 14, 15]
+	};
+	
 	//sample constructor
-	prototype.___construct = function() {
+	this.___construct = function() {
 		this.constructCalled = true;
 	};
 	
 	//sample public method
-	prototype.sampleMethod = function() {
+	this.sampleMethod = function() {
 		return this._sampleMethod();
 	};
 	
 	//sample protected method
-	prototype._sampleMethod = function() {
+	this._sampleMethod = function() {
 		return this.__sampleMethod();
 	};
 	
 	//sample private method
-	prototype.__sampleMethod = function() {
+	this.__sampleMethod = function() {
 		return this.SOME_CONSTANT + this._sampleProperty;
 	};
 	
-	prototype.sampleAccessMethod = function() {
+	this.sampleAccessMethod = function() {
 		return this.sampleMethod()
 		+ this._sampleMethod()
 		+ this.__sampleMethod();
 	};
 	
 	//sample magic methods
-	prototype.___get = function(name) {
+	this.___get = function(name) {
 		return this.data[name];
 	};
 	
-	prototype.___set = function(name, value) {
+	this.___set = function(name, value) {
 		this.data[name] = value;
 	};
 	
-	prototype.___enum = function() {
+	this.___enum = function() {
 		return Object.keys(this.data);
 	};
 	
-	prototype.___has = function(name, value) {
+	this.___has = function(name, value) {
 		return this.data.hasOwnProperty(name);
 	};
 	
-	prototype.___delete = function(name) {
+	this.___delete = function(name) {
 		delete this.data[name];
 	};
-	
-	return prototype;
 });
 
 //sample child definition
 //you can use object or function as the definition
 var ChildClass = RootClass.extend(function() {
-	var prototype = {};
-	
 	//sample constants
-	prototype.SOME_CONSTANT_2 = 'bar';
+	this.SOME_CONSTANT_2 = 'bar';
 	
 	//sample protected properties
-	prototype._sampleProperty = 7.5;
+	this._sampleProperty = 7.5;
 	
 	//sample public methods
-	prototype.sampleMethod = function() {
+	this.sampleMethod = function() {
 		return this._sampleMethod();
 	};
 	
 	//sample protected methods
-	prototype._sampleMethod = function() {
+	this._sampleMethod = function() {
 		return this.___parent._sampleMethod();
 	};
-	
-	return prototype;
 });
 
 //instantiate child
