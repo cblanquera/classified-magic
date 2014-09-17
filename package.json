@@ -1,7 +1,7 @@
 {
   "name": "classified-magic",
   "description": "OOP for NodeJS with magic",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "author": {
     "name": "Christian Blanquera",
     "email": "cblanquera@openovate.com"
@@ -21,7 +21,7 @@
     "mocha": "1.21.4"
   },
   "dependencies": {
-    "classified": "0.0.16" ,
+    "classified": "0.0.17" ,
 	"node-proxy": "0.8.0"
   },
   "main": "./magic.js",
