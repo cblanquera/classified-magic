@@ -2,6 +2,8 @@
 
   OOP for NodeJS with magic. Inspired by [Classified](https://github.com/cblanquera/classified)
 
+[![Build Status](https://api.travis-ci.org/cblanquera/classified-magic.png)](https://travis-ci.org/cblanquera/classified-magic/)
+
 ### Installation
 
 ```bash
