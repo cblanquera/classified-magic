@@ -30,6 +30,6 @@
     "url": "https://github.com/cblanquera/magic.git"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --harmony"
   }
 }

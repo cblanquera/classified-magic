@@ -1,9 +1,12 @@
 var classified 	= require('classified'),
-	separator	= require('path').sep;
+	separator	= require('path').sep,
+	proxy		= Proxy;
 
+/*jshint -W079 */
 if(typeof Proxy === 'undefined') {
 	var Proxy = require('node-proxified');
 }
+
 /* Definition
 -------------------------------*/
 var magic = function() {
@@ -140,7 +143,7 @@ var magic = function() {
 			
 		Error.prepareStackTrace = function (_, stack) {
 			return stack;
-		}
+		};
 
 		// Create a new `Error`, which automatically gets `stack`
 		var error = new Error();
