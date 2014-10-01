@@ -4,6 +4,8 @@
 
 [![Build Status](https://api.travis-ci.org/cblanquera/classified-magic.png)](https://travis-ci.org/cblanquera/classified-magic/)
 
+[![NPM](https://badge.fury.io/js/classified-magic.svg)](https://www.npmjs.org/package/classified-magic)
+
 ### Installation
 
 ```bash
