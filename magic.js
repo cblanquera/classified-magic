@@ -1,10 +1,9 @@
 var classified 	= require('classified'),
 	separator	= require('path').sep;
-	
-if(typeof Proxy === 'undefined') {
-	var Proxy = require('node-proxy');
-}
 
+if(typeof Proxy === 'undefined') {
+	var Proxy = require('node-proxified');
+}
 /* Definition
 -------------------------------*/
 var magic = function() {
@@ -236,7 +235,7 @@ var magic = function() {
 			delete instance[name];
 		};
 		
-		return Proxy.create(magic, instance);
+		return Proxy(magic, instance);
 	};
 	
 	return method;
