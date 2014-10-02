@@ -1,11 +1,5 @@
 var classified 	= require('classified'),
-	separator	= require('path').sep,
-	proxy		= Proxy;
-
-/*jshint -W079 */
-if(typeof Proxy === 'undefined') {
-	var Proxy = require('node-proxified');
-}
+	separator	= require('path').sep;
 
 /* Definition
 -------------------------------*/
@@ -183,8 +177,30 @@ var magic = function() {
 			return instance;
 		}
 		
+		// check if native Proxy is enabled
+		if(typeof Proxy === 'undefined') {
+			throw new Error(
+				'Must have at least native proxy support by running ' + 
+				'`node --harmony` or node -- harmony-proxies, or if ' +
+				'using mocha run `mocha --harmony test`');
+		}
+		
 		var magic = {};
 		
+		magic.getOwnPropertyDescriptor = function(name) {
+			if(typeof instance.getOwnPropertyDescriptor === 'function') {
+				return instance.getOwnPropertyDescriptor(instance, name);
+			}
+
+			var descriptor = Object.getOwnPropertyDescriptor(instance, name);
+			
+			if(typeof descriptor !== 'undefined') { 
+				desciptor.configurable = true; 
+			}
+
+			return descriptor;
+		};
+
 		magic.get = function(receiver, name) {
 			//if it exists
 			if(typeof instance[name] !== 'undefined' || _isMagicBinded()) {
@@ -238,7 +254,12 @@ var magic = function() {
 			delete instance[name];
 		};
 		
-		return Proxy(magic, instance);
+		// check support for new Proxy
+		if(typeof Proxy === 'object') {
+			return Proxy.create(magic, instance);
+		}
+	
+		return new Proxy(instance, magic);
 	};
 	
 	return method;
