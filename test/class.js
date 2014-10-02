@@ -135,6 +135,17 @@ describe('Magic Test Suite', function() {
 			root.SOME_CONSTANT = 'bar';
 			assert.equal('foo', root.sampleMethod());
 		});
+		
+		it('should only be one', function() {
+			var single = classified({ x: 1 }).singleton();
+			var multiple = classified({ x: 1 });
+			
+			single().x = 2;
+			multiple().x = 3;
+			
+			assert(2, single().x);
+			assert(1, multiple().x);
+		});
 	});
 	
 	describe('Inheritance Tests', function() {

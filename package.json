@@ -1,7 +1,7 @@
 {
   "name": "classified-magic",
   "description": "OOP for NodeJS with magic",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "author": {
     "name": "Christian Blanquera",
     "email": "cblanquera@openovate.com"
@@ -22,7 +22,7 @@
 	"mocha-jshint": "0.0.9"
   },
   "dependencies": {
-    "classified": "0.1.1" ,
+    "classified": "0.1.2" ,
 	"node-proxified": "0.0.2"
   },
   "main": "./magic.js",
