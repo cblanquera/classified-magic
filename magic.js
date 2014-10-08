@@ -195,15 +195,21 @@ var magic = function() {
 			var descriptor = Object.getOwnPropertyDescriptor(instance, name);
 			
 			if(typeof descriptor !== 'undefined') { 
-				desciptor.configurable = true; 
+				descriptor.configurable = true; 
 			}
 
 			return descriptor;
 		};
+		
+		magic.getOwnPropertyNames = function () {
+			return Object.getOwnPropertyNames(instance);
+		};
 
 		magic.get = function(receiver, name) {
 			//if it exists
-			if(typeof instance[name] !== 'undefined' || _isMagicBinded()) {
+			if(typeof instance[name] !== 'undefined' 
+			|| _isMagicBinded()
+			|| name.indexOf('___') === 0) {
 				return instance[name];
 			}
 			
@@ -214,7 +220,9 @@ var magic = function() {
 		
 		magic.set = function(receiver, name, value) {
 			//if it exists
-			if(typeof instance[name] !== 'undefined' || _isMagicBinded()) {
+			if(typeof instance[name] !== 'undefined' 
+			|| _isMagicBinded()
+			|| name.indexOf('___') === 0) {
 				instance[name] = value;
 				return;
 			}
@@ -237,21 +245,28 @@ var magic = function() {
 		};
 		
 		magic.has = function(name) {
+			if(name.indexOf('___') === 0) {
+				return instance.hasOwnProperty(name);
+			}
+			
 			//if enum is set
 			if(typeof instance.___has === 'function') {
 				return instance.___has.call(instance, name);
 			}
 			
-			return Object.keys(instance);
+			return instance.hasOwnProperty(name);
 		};
 		
 		magic.delete = function(name) {
-			//if enum is set
-			if(!_isMagicBinded() && typeof instance.___delete === 'function') {
-				return instance.___delete.call(instance, name);
+			if(instance.hasOwnProperty(name) || name.indexOf('___') === 0) {
+				delete instance[name];
+				return;	
 			}
 			
-			delete instance[name];
+			//if enum is set
+			if(!_isMagicBinded() && typeof instance.___delete === 'function') {
+				instance.___delete.call(instance, name);
+			}
 		};
 		
 		// check support for new Proxy

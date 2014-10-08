@@ -22,7 +22,7 @@
 	"mocha-jshint": "0.0.9"
   },
   "dependencies": {
-    "classified": "0.1.2"
+    "classified": "0.1.3"
   },
   "main": "./magic.js",
   "repository": {

@@ -3,80 +3,75 @@ var classified 	= require('../magic');
 
 //Sample Root Class
 var Root = classified(function() {
-	var prototype = {
-		data: {},
-		SOME_CONSTANT: 'foo',
-		sampleProperty: 4.5,
-		sampleDeepProperty: {
-			sample1: 'Hello',
-			sample2: [4, 5, 6, 7],
-			sample3: {
-				bool	: true,
-				regex	: /^abc/,
-				date	: new Date(),
-				string	: String
-			}
-		},
-		
-		//protected
-		_sampleProperty: 5.5,
-		_sampleDeepProperty: {
-			sample1: '_Hello',
-			sample2: [8, 9, 0, 1]
-		},
-		
-		//private
-		__sampleProperty: 6.5,
-		__sampleDeepProperty: {
-			sample1: '__Hello',
-			sample2: [12, 13, 14, 15]
+	this.data = {};
+	this.SOME_CONSTANT = 'foo';
+	this.sampleProperty = 4.5;
+	this.sampleDeepProperty = {
+		sample1: 'Hello',
+		sample2: [4, 5, 6, 7],
+		sample3: {
+			bool	: true,
+			regex	: /^abc/,
+			date	: new Date(),
+			string	: String
 		}
 	};
+		
+		//protected
+	this._sampleProperty = 5.5;
+	this._sampleDeepProperty = {
+		sample1: '_Hello',
+		sample2: [8, 9, 0, 1]
+	};
+		
+		//private
+	this.__sampleProperty = 6.5;
+	this.__sampleDeepProperty = {
+		sample1: '__Hello',
+		sample2: [12, 13, 14, 15]
+	};
 	
-	prototype.___construct = function() {
+	this.___construct = function() {
 		this.constructCalled = true;
 	};
 	
-	prototype.sampleMethod = function() {
+	this.sampleMethod = function() {
 		return this.SOME_CONSTANT;
 	};
 	
-	prototype._sampleMethod = function() {
+	this._sampleMethod = function() {
 		return '_bar';
 	};
 	
-	prototype.__sampleMethod = function() {
+	this.__sampleMethod = function() {
 		return '__zoo';
 	};
 	
-	prototype.sampleAccessMethod = function() {
+	this.sampleAccessMethod = function() {
 		return this.sampleMethod()
 		+ this._sampleMethod()
 		+ this.__sampleMethod();
 	};
 	
-	prototype.___get = function(name) {
-		//console.log('in?', name);
+	this.___get = function(name) {
 		return this.data[name];
 	};
 	
-	prototype.___set = function(name, value) {
+	this.___set = function(name, value) {
 		this.data[name] = value;
 	};
 	
-	prototype.___enum = function() {
+	this.___enum = function() {
 		return Object.keys(this.data);
 	};
 	
-	prototype.___has = function(name, value) {
+	this.___has = function(name, value) {
 		return this.data.hasOwnProperty(name);
 	};
 	
-	prototype.___delete = function(name) {
+	this.___delete = function(name) {
 		delete this.data[name];
 	};
-	
-	return prototype;
 });
 
 describe('Magic Test Suite', function() {
