@@ -219,7 +219,7 @@ describe('Magic Test Suite', function() {
 		it('should be able access parent methods', function() {
 			var child = classified({
 				sampleMethod: function() {
-					return this.___parent.sampleMethod()
+					return this.___parent.sampleMethod();
 				}
 			}).trait(Root.definition()).load();
 			
